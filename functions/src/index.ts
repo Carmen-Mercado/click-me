@@ -1,6 +1,18 @@
-const functions = require('firebase-functions');
+import * as functions from 'firebase-functions';
+import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
 
-exports.addMessage = functions.https.onRequest((req, res) => {
-    const original = req.query.text;
-    res.send(`Hello from Firebase! You sent: ${original}`);
+// Crear una nueva instancia de aplicación Express
+const app: Express = express();
+
+// Aplicar middleware CORS para permitir solicitudes de cualquier origen
+app.use(cors({ origin: true }));
+
+// Definir un endpoint GET que responde con un mensaje de bienvenida
+app.get('/', (req: Request, res: Response): void => {
+    res.send('¡Hola desde Firebase Cloud Functions usando TypeScript!');
 });
+
+// Exportar la función de Cloud Function llamada `api`
+// Esto crea un endpoint accesible públicamente
+exports.api = functions.https.onRequest(app);
