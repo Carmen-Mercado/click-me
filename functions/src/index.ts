@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 
-exports.showBanner = functions.https.onRequest((request, response) => {
-    response.send("Bienvenido a mi sitio Firebase!");
+exports.addMessage = functions.https.onRequest((req, res) => {
+    const original = req.query.text;
+    res.send(`Hello from Firebase! You sent: ${original}`);
 });
